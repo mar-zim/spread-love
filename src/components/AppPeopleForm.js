@@ -5,15 +5,16 @@ import 'react-datepicker/dist/react-datepicker.css'
 import styled from 'styled-components'
 
 export default function AddPeopleForm() {
-  const { register, handleSubmit, errors, formState, control } = useForm({
-    mode: 'onBlur',
-    // mode: 'onChanges',
-    // reValidateMode: 'onChange',
-  })
+  const { register, handleSubmit, errors, formState, control, reset } = useForm(
+    {
+      mode: 'onBlur',
+    }
+  )
   console.log('Errors:', errors)
 
-  function onSubmit(data) {
-    console.log('data: ', data)
+  async function onSubmit(data) {
+    await console.log('data: ', data)
+    reset()
   }
 
   return (
@@ -22,6 +23,7 @@ export default function AddPeopleForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           name="names"
+          defaultValue=""
           ref={register({
             required: true,
             minLength: 2,
@@ -56,6 +58,7 @@ export default function AddPeopleForm() {
         {errors.date && 'Please enter something here'}
         <input
           name="location"
+          defaultValue=""
           ref={register({
             required: true,
           })}
