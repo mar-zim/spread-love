@@ -8,10 +8,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, setUserLocation] = useState('')
-  const [indexes, setIndexes] = useState([])
-  const [counter, setCounter] = useState(0)
-  console.log('counter', counter)
-  console.log('indexes', indexes)
   const inputId = uuidv4()
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
@@ -22,33 +18,15 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
     }
   )
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: 'friends',
-    }
-  )
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'friends',
+  })
 
   function onSubmit(newEncounter) {
     console.log('Input: ', newEncounter)
     setEncounters([...encounters, newEncounter])
     reset()
-  }
-
-  function addFriend() {
-    setCounter(counter + 1)
-    setIndexes([...indexes, counter])
-  }
-
-  function countUp() {
-    setCounter(counter + 1)
-  }
-
-  function removeFriend(index) {
-    setIndexes((prevIndexes) => [
-      ...prevIndexes.filter((item) => item !== index),
-    ])
-    setCounter((prevCounter) => prevCounter - 1)
   }
 
   function getLocation() {
@@ -69,8 +47,6 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   return (
     <div>
       <h3>Add people you met</h3>
-      <div>Counter: {counter}</div>
-      <button onClick={countUp}>Count Up</button>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         {fields.map((item, index) => {
           return (
@@ -84,48 +60,26 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
               <input
                 name={`friends[${index}].lastName`}
                 defaultValue={`${item.lastName}`}
-                ref={register()}
+                ref={register({
+                  required: true,
+                })}
                 placeholder="Last Name"
               />
               <button type="button" onClick={() => remove(index)}>
-                Delete
+                x
               </button>
             </div>
           )
         })}
-
         <button
           type="button"
           onClick={() => {
             append({ firstName: '', lastName: '' })
           }}
         >
-          append
+          Add more friends
         </button>
-        {/* {indexes.map((index) => {
-          const fieldName = `friends[${index}]`
-          return (
-            <div key={fieldName}>
-              <input
-                name={fieldName}
-                defaultValue=""
-                ref={register({
-                  required: true,
-                  minLength: 2,
-                  maxLength: 100,
-                })}
-                placeholder="Enter name of your friend"
-              />
-              <button type="button" onClick={removeFriend(index)}>
-                Remove
-              </button>
-            </div>
-          )
-        })} */}
-        {errors.names && <div>Please enter something above</div>}
-        {/* <button type="button" onClick={addFriend}>
-          Add Friend
-        </button> */}
+        {errors.friends && <div>Please enter first and last name</div>}
         <Controller
           control={control}
           name="date"
@@ -149,7 +103,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
             required: true,
           }}
         />
-        {errors.date && <div>Please enter something above</div>}
+        {errors.date && <div>Please select a date</div>}
         <textarea
           name="location"
           defaultValue={userLocation}
@@ -158,7 +112,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           })}
           placeholder="Press button below to get current location"
         />
-        {errors.location && <div>Please enter something above</div>}
+        {errors.location && <div>Please enter a location</div>}
         <input
           name="entryId"
           type="hidden"
