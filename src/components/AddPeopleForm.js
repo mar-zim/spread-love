@@ -4,9 +4,11 @@ import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Controller, useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, setUserLocation] = useState('')
+  const inputId = uuidv4()
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
@@ -36,7 +38,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   return (
     <div>
-      <h4>Add people you met</h4>
+      <h3>Add people you met</h3>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <input
           name="names"
@@ -58,7 +60,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
               onChange={onChange}
               onBlur={onBlur}
               selected={value}
-              dateFormat="dd MM yyyy"
+              dateFormat="MM/dd/yyyy"
               maxDate={new Date()}
               showTimeSelect={false}
               todayButton="Today"
@@ -82,6 +84,12 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           placeholder="Press button below to get current location"
         />
         {errors.location && <div>Please enter something above</div>}
+        <input
+          name="entryId"
+          type="hidden"
+          defaultValue={inputId}
+          ref={register()}
+        />
         <button type="button" onClick={getLocation}>
           Get Location
         </button>
