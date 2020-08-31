@@ -1,10 +1,10 @@
-export function saveToLocal(name, data) {
-  localStorage.setItem(name, JSON.stringify(data))
+export function saveToLocal(keyName, data) {
+  localStorage.setItem(keyName, JSON.stringify(data))
 }
 
-export function loadFromLocal(name) {
+export function loadFromLocal(keyName) {
   try {
-    return JSON.parse(localStorage.getItem(name))
+    return JSON.parse(localStorage.getItem(keyName))
   } catch (error) {
     console.log(error.message)
   }

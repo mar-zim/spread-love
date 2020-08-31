@@ -1,11 +1,11 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Controller, useForm } from 'react-hook-form'
-import axios from 'axios'
 import styled from 'styled-components'
 
-export default function AddPeopleForm() {
+export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, setUserLocation] = useState('')
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
@@ -13,8 +13,9 @@ export default function AddPeopleForm() {
     }
   )
 
-  async function onSubmit(inputValues) {
-    console.log('Input: ', inputValues)
+  function onSubmit(newEncounter) {
+    console.log('Input: ', newEncounter)
+    setEncounters([...encounters, newEncounter])
     reset()
   }
 
