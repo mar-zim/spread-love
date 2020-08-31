@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { Controller, useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -80,28 +79,13 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           Add more friends
         </button>
         {errors.friends && <div>Please enter first and last name</div>}
-        <Controller
-          control={control}
+        <input
+          type="date"
           name="date"
-          defaultValue={new Date()}
-          render={({ onChange, onBlur, value }) => (
-            <ReactDatePicker
-              onChange={onChange}
-              onBlur={onBlur}
-              selected={value}
-              dateFormat="MM/dd/yyyy"
-              maxDate={new Date()}
-              showTimeSelect={false}
-              todayButton="Today"
-              dropdownMode="select"
-              isClearable
-              placeholderText="Click to select date"
-              shouldCloseOnSelect
-            />
-          )}
-          rules={{
+          ref={register({
             required: true,
-          }}
+          })}
+          placeholder="Date"
         />
         {errors.date && <div>Please select a date</div>}
         <textarea
