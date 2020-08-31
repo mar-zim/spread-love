@@ -1,14 +1,19 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+import ReactDatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import styled from 'styled-components'
 
 export default function AddPeopleForm() {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, control } = useForm({
     mode: 'onBlur',
+    // mode: 'onChanges',
+    // reValidateMode: 'onChange',
   })
-  console.log(errors)
+  console.log('Errors:', errors)
 
   function onSubmit(data) {
-    console.log(data)
+    console.log('data: ', data)
   }
 
   return (
@@ -21,17 +26,32 @@ export default function AddPeopleForm() {
             required: true,
             minLength: 2,
             maxLength: 100,
-            pattern: /^[A-Za-z]+$/i,
           })}
           placeholder="Enter names seperated by commas"
         />
         {errors.names && 'Please enter something here'}
-        <input
+        <Controller
+          control={control}
           name="date"
-          ref={register({
+          defaultValue={new Date()}
+          render={({ onChange, onBlur, value }) => (
+            <ReactDatePicker
+              onChange={onChange}
+              onBlur={onBlur}
+              selected={value}
+              dateFormat="dd MM yyyy"
+              maxDate={new Date()}
+              showTimeSelect={false}
+              todayButton="Today"
+              dropdownMode="select"
+              isClearable
+              placeholderText="Click to select date"
+              shouldCloseOnSelect
+            />
+          )}
+          rules={{
             required: true,
-          })}
-          placeholder="Date"
+          }}
         />
         {errors.date && 'Please enter something here'}
         <input
