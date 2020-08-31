@@ -10,7 +10,14 @@ export default function ListItem({ encounter }) {
       <h4>
         Date: {month}/{day}/{year}
       </h4>
-      <div>People: {encounter.names}</div>
+      <div>People:</div>
+      <ul>
+        {encounter.friends.map((friend) => (
+          <li key={friend.firstName + friend.lastName}>
+            {friend.firstName} {friend.lastName}
+          </li>
+        ))}
+      </ul>
       <div>Location: {encounter.location}</div>
     </>
   )

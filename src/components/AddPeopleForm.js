@@ -2,16 +2,30 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useFieldArray } from 'react-hook-form'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, setUserLocation] = useState('')
+  const [indexes, setIndexes] = useState([])
+  const [counter, setCounter] = useState(0)
+  console.log('counter', counter)
+  console.log('indexes', indexes)
   const inputId = uuidv4()
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
+      defaultValues: {
+        friends: [{ firstName: '', lastName: '' }],
+      },
+    }
+  )
+
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: 'friends',
     }
   )
 
@@ -19,6 +33,22 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
     console.log('Input: ', newEncounter)
     setEncounters([...encounters, newEncounter])
     reset()
+  }
+
+  function addFriend() {
+    setCounter(counter + 1)
+    setIndexes([...indexes, counter])
+  }
+
+  function countUp() {
+    setCounter(counter + 1)
+  }
+
+  function removeFriend(index) {
+    setIndexes((prevIndexes) => [
+      ...prevIndexes.filter((item) => item !== index),
+    ])
+    setCounter((prevCounter) => prevCounter - 1)
   }
 
   function getLocation() {
@@ -39,18 +69,63 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   return (
     <div>
       <h3>Add people you met</h3>
+      <div>Counter: {counter}</div>
+      <button onClick={countUp}>Count Up</button>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <input
-          name="names"
-          defaultValue=""
-          ref={register({
-            required: true,
-            minLength: 2,
-            maxLength: 100,
-          })}
-          placeholder="Enter names seperated by commas"
-        />
+        {fields.map((item, index) => {
+          return (
+            <div key={item.id}>
+              <input
+                name={`friends[${index}].firstName`}
+                defaultValue={`${item.firstName}`}
+                ref={register()}
+                placeholder="First Name"
+              />
+              <input
+                name={`friends[${index}].lastName`}
+                defaultValue={`${item.lastName}`}
+                ref={register()}
+                placeholder="Last Name"
+              />
+              <button type="button" onClick={() => remove(index)}>
+                Delete
+              </button>
+            </div>
+          )
+        })}
+
+        <button
+          type="button"
+          onClick={() => {
+            append({ firstName: '', lastName: '' })
+          }}
+        >
+          append
+        </button>
+        {/* {indexes.map((index) => {
+          const fieldName = `friends[${index}]`
+          return (
+            <div key={fieldName}>
+              <input
+                name={fieldName}
+                defaultValue=""
+                ref={register({
+                  required: true,
+                  minLength: 2,
+                  maxLength: 100,
+                })}
+                placeholder="Enter name of your friend"
+              />
+              <button type="button" onClick={removeFriend(index)}>
+                Remove
+              </button>
+            </div>
+          )
+        })} */}
         {errors.names && <div>Please enter something above</div>}
+        {/* <button type="button" onClick={addFriend}>
+          Add Friend
+        </button> */}
         <Controller
           control={control}
           name="date"
