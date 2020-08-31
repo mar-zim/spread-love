@@ -1,10 +1,11 @@
-import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import styled from 'styled-components'
+import { Controller, useForm } from 'react-hook-form'
+import axios from 'axios'
 
 export default function AddPeopleForm() {
+  const [userLocation, setUserLocation] = useState('')
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
@@ -12,14 +13,41 @@ export default function AddPeopleForm() {
   )
   console.log('Errors:', errors)
 
-  async function onSubmit(data) {
-    await console.log('data: ', data)
+  async function onSubmit(inputValues) {
+    console.log('Input: ', inputValues)
     reset()
+  }
+
+  if ('geolocation' in navigator) {
+    console.log('Geo Available')
+  } else {
+    console.log('Geo Not Available')
+  }
+
+  function getLocation() {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log('getting location initiated')
+      console.log('Latitude is :', position.coords.latitude)
+      console.log('Longitude is :', position.coords.longitude)
+      console.log(position)
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+
+      axios
+        .get(
+          `https://eu1.locationiq.com/v1/reverse.php?key=pk.bdf564897f7c87e4a19e06e928604689&lat=${lat}&lon=${lon}&format=json`
+        )
+        .then((response) => response.data)
+        .then((data) => setUserLocation(data.display_name))
+        .catch((error) => console.log(error.message))
+    })
   }
 
   return (
     <div>
       <h4>Add people you met</h4>
+      <button onClick={getLocation}>Get Location</button>
+      {userLocation && <div>Location: {userLocation}</div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           name="names"
