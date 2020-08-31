@@ -4,7 +4,7 @@ import AddPeopleForm from '../components/AppPeopleForm'
 export default function Home() {
   return (
     <>
-      <h2>Hallo, ich bin home!</h2>
+      <h2>Welcome!</h2>
       <AddPeopleForm />
     </>
   )

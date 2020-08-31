@@ -3,6 +3,7 @@ import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Controller, useForm } from 'react-hook-form'
 import axios from 'axios'
+import styled from 'styled-components'
 
 export default function AddPeopleForm() {
   const [userLocation, setUserLocation] = useState('')
@@ -11,25 +12,14 @@ export default function AddPeopleForm() {
       mode: 'onBlur',
     }
   )
-  console.log('Errors:', errors)
 
   async function onSubmit(inputValues) {
     console.log('Input: ', inputValues)
     reset()
   }
 
-  if ('geolocation' in navigator) {
-    console.log('Geo Available')
-  } else {
-    console.log('Geo Not Available')
-  }
-
   function getLocation() {
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log('getting location initiated')
-      console.log('Latitude is :', position.coords.latitude)
-      console.log('Longitude is :', position.coords.longitude)
-      console.log(position)
       const lat = position.coords.latitude
       const lon = position.coords.longitude
 
@@ -46,9 +36,7 @@ export default function AddPeopleForm() {
   return (
     <div>
       <h4>Add people you met</h4>
-      <button onClick={getLocation}>Get Location</button>
-      {userLocation && <div>Location: {userLocation}</div>}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <input
           name="names"
           defaultValue=""
@@ -59,7 +47,7 @@ export default function AddPeopleForm() {
           })}
           placeholder="Enter names seperated by commas"
         />
-        {errors.names && 'Please enter something here'}
+        {errors.names && <div>Please enter something above</div>}
         <Controller
           control={control}
           name="date"
@@ -83,20 +71,29 @@ export default function AddPeopleForm() {
             required: true,
           }}
         />
-        {errors.date && 'Please enter something here'}
-        <input
+        {errors.date && <div>Please enter something above</div>}
+        <textarea
           name="location"
-          defaultValue=""
+          defaultValue={userLocation}
           ref={register({
             required: true,
           })}
-          placeholder="Location"
+          placeholder="Press button below to get current location"
         />
-        {errors.location && 'Please enter something here'}
+        {errors.location && <div>Please enter something above</div>}
+        <button type="button" onClick={getLocation}>
+          Get Location
+        </button>
         <button type="submit" disabled={formState.isSubmitting}>
           Submit
         </button>
-      </form>
+      </StyledForm>
     </div>
   )
 }
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`
