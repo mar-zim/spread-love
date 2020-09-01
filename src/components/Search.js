@@ -24,6 +24,7 @@ export default function Search({
         value={searchTerm}
         onChange={handleSearch}
         onClick={() => setDisplay(!display)}
+        onBlur={() => setDisplay(false)}
       />
       {display && (
         <div>

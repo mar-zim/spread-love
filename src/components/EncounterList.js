@@ -3,9 +3,31 @@ import ListItem from './ListItem'
 import Search from './Search'
 
 export default function EncounterList({ encounters }) {
-  const sortedEncounters = encounters
+  const allEncountersSorted = encounters
     .slice()
     .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+  const currentDate = new Date()
+  const currentDateTime = currentDate.getTime()
+  const last14DaysDate = new Date(
+    currentDate.setDate(currentDate.getDate() - 14)
+  )
+  const last14DaysDateTime = last14DaysDate.getTime()
+
+  const last14DaysEncountersSorted = encounters
+    .filter((encounter) => {
+      const elementDateTime = new Date(encounter.date).getTime()
+      if (
+        elementDateTime <= currentDateTime &&
+        elementDateTime > last14DaysDateTime
+      ) {
+        return true
+      }
+      return false
+    })
+    .sort((a, b) => {
+      return new Date(b.date) - new Date(a.date)
+    })
 
   const [searchTerm, setSearchTerm] = useState('')
   const [autocompleteOptions, setAutocompleteOptions] = useState([])
@@ -19,24 +41,21 @@ export default function EncounterList({ encounters }) {
           (friendFirstNameArray = [...friendFirstNameArray, friend.firstName])
       )
     )
-    console.log(friendFirstNameArray)
     const uniqueFirstNames = [...new Set(friendFirstNameArray)]
     setAutocompleteOptions(uniqueFirstNames)
   }, [])
 
-  console.log('Options:', autocompleteOptions)
-
   const results = searchTerm
-    ? sortedEncounters.filter((sortedEncounter) =>
-        sortedEncounter.friends.find((friend) =>
+    ? last14DaysEncountersSorted.filter((encounter) =>
+        encounter.friends.find((friend) =>
           friend.firstName.toLowerCase().includes(searchTerm.toLowerCase())
         )
       )
-    : sortedEncounters
+    : last14DaysEncountersSorted
 
   return (
     <>
-      <h3>People you met</h3>
+      <h3>People you met in the last 14 days</h3>
       <Search
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}
