@@ -55,8 +55,7 @@ export default function SearchEntriesPage({ encounters }) {
 
   return (
     <>
-      <h2>Search for entries by first name</h2>
-      <h3>People you met in the last 14 days</h3>
+      <h2>Search for entries</h2>
       <Search
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}

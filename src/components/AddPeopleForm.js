@@ -47,77 +47,74 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   }
 
   return (
-    <div>
-      <h3>Add people you met</h3>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        {fields.map((item, index) => {
-          return (
-            <div key={item.id}>
-              <input
-                name={`friends[${index}].firstName`}
-                defaultValue={`${item.firstName}`}
-                ref={register()}
-                placeholder="First Name"
-              />
-              <input
-                name={`friends[${index}].lastName`}
-                defaultValue={`${item.lastName}`}
-                ref={register({
-                  required: true,
-                })}
-                placeholder="Last Name"
-              />
-              <button type="button" onClick={() => remove(index)}>
-                x
-              </button>
-            </div>
-          )
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      {fields.map((item, index) => {
+        return (
+          <div key={item.id}>
+            <input
+              name={`friends[${index}].firstName`}
+              defaultValue={`${item.firstName}`}
+              ref={register()}
+              placeholder="First Name"
+            />
+            <input
+              name={`friends[${index}].lastName`}
+              defaultValue={`${item.lastName}`}
+              ref={register({
+                required: true,
+              })}
+              placeholder="Last Name"
+            />
+            <button type="button" onClick={() => remove(index)}>
+              x
+            </button>
+          </div>
+        )
+      })}
+      <button
+        type="button"
+        onClick={() => {
+          append({ firstName: '', lastName: '' })
+        }}
+      >
+        Add more friends
+      </button>
+      {errors.friends && <div>Please enter first and last name</div>}
+      <input
+        type="date"
+        name="date"
+        ref={register({
+          required: true,
         })}
-        <button
-          type="button"
-          onClick={() => {
-            append({ firstName: '', lastName: '' })
-          }}
-        >
-          Add more friends
-        </button>
-        {errors.friends && <div>Please enter first and last name</div>}
-        <input
-          type="date"
-          name="date"
-          ref={register({
-            required: true,
-          })}
-          placeholder="Pick a date"
-        />
-        {errors.date && <div>Please select a date</div>}
-        {/* {userLocationIsLoading ? (
+        placeholder="Pick a date"
+      />
+      {errors.date && <div>Please select a date</div>}
+      {/* {userLocationIsLoading ? (
           <div>Getting your current location data..</div>
         ) : ( */}
-        <textarea
-          name="location"
-          defaultValue={userLocation}
-          ref={register({
-            required: true,
-          })}
-          placeholder="Press button below to get current location"
-        />
-        {/* )} */}
-        {errors.location && <div>Please enter a location</div>}
-        <input
-          name="entryId"
-          type="hidden"
-          defaultValue={inputId}
-          ref={register()}
-        />
-        {/* <button type="button" onClick={getLocation}>
+      <textarea
+        name="location"
+        defaultValue={userLocation}
+        ref={register({
+          required: true,
+        })}
+        placeholder="Press button below to get current location"
+      />
+      {/* )} */}
+      {errors.location && <div>Please enter a location</div>}
+      <input
+        name="entryId"
+        type="hidden"
+        defaultValue={inputId}
+        ref={register()}
+      />
+      {/* <button type="button" onClick={getLocation}>
           Get Location
         </button> */}
-        <button type="submit" disabled={formState.isSubmitting}>
-          Submit
-        </button>
-      </StyledForm>
-    </div>
+      <button type="submit" disabled={formState.isSubmitting}>
+        Submit
+      </button>
+    </StyledForm>
   )
 }
 
