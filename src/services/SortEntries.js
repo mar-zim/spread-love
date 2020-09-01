@@ -14,6 +14,7 @@ export function sortEncountersLast14Days(encounters) {
   )
   const last14DaysDateTime = last14DaysDate.getTime()
 
+  //the method .getTime is used to get numerical values (milliseconds since the UNIC epoch) which can easily be compared
   const last14DaysEncountersSorted = encounters
     .filter((encounter) => {
       const elementDateTime = new Date(encounter.date).getTime()

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 export default function useLocation() {
   const [userLocation, setUserLocation] = useState('')
   const [userLocationIsLoading, setUserLocationIsLoading] = useState(true)
+  //create loading state to give user feedback, that the location is still being fetched
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -20,6 +21,7 @@ export default function useLocation() {
         .finally(setUserLocationIsLoading(false))
     })
 
+    //if no fetching o the location is possible, the input field will eventually show, so the user can manually type a location
     setTimeout(function () {
       setUserLocationIsLoading(false)
     }, 10000)

@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-export default function Search({
-  setSearchTerm,
-  searchTerm,
-  setDisplay,
-  display,
-  encounters,
-}) {
+export default function Search({ setSearchTerm, searchTerm, encounters }) {
   const [autocompleteOptions, setAutocompleteOptions] = useState([])
+  const [showDropdown, setShowDropdown] = useState(false)
 
   function handleSearch(event) {
     setSearchTerm(event.target.value)
   }
 
+  //function to hide the autocomplete options and take the selected name as search parameter, when a name is selcted from the autocomplete list
   function selectName(name) {
     setSearchTerm(name)
-    setDisplay(false)
+    setShowDropdown(false)
   }
 
+  //when the component mounts, an array is created that contains all the entered names as unique values. this array is used for the dropdown of the autocomplete options
   useEffect(() => {
     let friendNameArray = []
     encounters.forEach((encounter) =>
@@ -38,9 +35,9 @@ export default function Search({
         placeholder="Search for entries by friend's name"
         value={searchTerm}
         onChange={handleSearch}
-        onClick={() => setDisplay(!display)}
+        onClick={() => setShowDropdown(!showDropdown)}
       />
-      {display && (
+      {showDropdown && (
         <StyledAutoCompleteDropdown>
           {autocompleteOptions
             .filter((option) => option.indexOf(searchTerm.toLowerCase()) > -1)
