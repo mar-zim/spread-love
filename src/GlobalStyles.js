@@ -27,28 +27,28 @@ body {
   color: var(--grey-2);
 }
 
-h1, h2, h3, h4, h5{
-  margin: 6px 0;
+h1, h2, h3, h4 {
+  margin: 20px 0 6px 0;
   font-family: var(--fontheader);
   font-weight: normal;
-  color: var(--grey-3);
+  color: var(--darkblue);
 }
 
 h1 {
-  font-size: 48px;
-}
-
-h2 {
   font-size: 32px;
 }
 
-h3 {
+h2 {
   font-size: 24px;
-  color: var(--grey-2);
+}
+
+h3 {
+  font-size: 20px;
+  color: var(--lightblue);
 }
 
 h4 {
-  font-size: 20px;
-  color: var(--grey-2);
+  font-size: 16px;
+  color: var(--lightblue);
 }
 `

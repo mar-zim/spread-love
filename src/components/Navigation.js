@@ -5,11 +5,15 @@ import styled from 'styled-components'
 export default function Navigation() {
   return (
     <StyledNavigation>
-      <NavLink exact to="/">
+      <StyledNavLink exact to="/" activeClassName="active">
         Home
-      </NavLink>
-      <NavLink to="/addentry">Add</NavLink>
-      <NavLink to="/search">Search</NavLink>
+      </StyledNavLink>
+      <StyledNavLink to="/addentry" activeClassName="active">
+        Add
+      </StyledNavLink>
+      <StyledNavLink to="/search" activeClassName="active">
+        Search
+      </StyledNavLink>
     </StyledNavigation>
   )
 }
@@ -20,5 +24,19 @@ const StyledNavigation = styled.div`
   align-items: center;
   justify-items: center;
   width: 100%;
-  height: 56px;
+  .active {
+    color: var(--orange);
+    border: 2px solid var(--orange);
+  }
+`
+
+const StyledNavLink = styled(NavLink)`
+  margin: 0;
+  padding: 2px 10px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--darkblue);
+  border: 2px solid var(--darkblue);
+  border-radius: 10px;
 `

@@ -4,7 +4,7 @@ import AddPeopleForm from '../components/AddPeopleForm'
 export default function AddEntryPage({ encounters, setEncounters }) {
   return (
     <>
-      <h2>Add people you met</h2>
+      <h1>Add people you met</h1>
       <AddPeopleForm encounters={encounters} setEncounters={setEncounters} />
     </>
   )

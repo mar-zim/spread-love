@@ -19,7 +19,7 @@ export default function SearchEntriesPage({ encounters }) {
 
   return (
     <>
-      <h2>Search for entries</h2>
+      <h1>Search for entries</h1>
       <Search
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}

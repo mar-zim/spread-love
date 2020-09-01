@@ -7,13 +7,13 @@ export default function HomePage({ encounters }) {
 
   return (
     <>
-      <h2>Welcome!</h2>
+      <h1>Welcome!</h1>
       <div>
         Below you see your list of friends, you met in the last 14 days. If you
         want to add a new meeting with a freind, got to "Add", if you want to
         search for meetings with specific friends, go to "Search".
       </div>
-      <h4>These were your encounters in the last 14 days</h4>
+      <h2>Last 14 days</h2>
       <EncounterList shownEntries={encountersLast14Days} />
     </>
   )

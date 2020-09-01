@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import 'react-datepicker/dist/react-datepicker.css'
 import { useForm, useFieldArray } from 'react-hook-form'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
@@ -98,7 +97,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         ref={register({
           required: true,
         })}
-        placeholder="Press button below to get current location"
+        placeholder="Location"
       />
       {/* )} */}
       {errors.location && <div>Please enter a location</div>}
