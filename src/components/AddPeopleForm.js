@@ -41,8 +41,10 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
             <StyledNameInput
               name={`friends[${index}].name`}
               defaultValue={`${item.name}`}
-              ref={register()}
-              placeholder="Enter first name and last name"
+              ref={register({
+                required: true,
+              })}
+              placeholder="Please enter a name"
             />
             <Button type="button" onClick={() => remove(index)} text="x" />
           </div>
