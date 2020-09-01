@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import Navigation from './components/Navigation'
 import AddEntryPage from './pages/AddEntryPage'
 import HomePage from './pages/HomePage'
 import SearchEntriesPage from './pages/SearchEntriesPage'
-import { saveToLocal, loadFromLocal } from './services/LocalStorage'
-import Navigation from './components/Navigation'
+import { loadFromLocal, saveToLocal } from './services/LocalStorage'
 
 export default function App() {
   const [encounters, setEncounters] = useState(
@@ -18,6 +18,7 @@ export default function App() {
 
   return (
     <AppGrid>
+      <Navigation />
       <StyledMain>
         <Switch>
           <Route
@@ -40,7 +41,6 @@ export default function App() {
           />
         </Switch>
       </StyledMain>
-      <Navigation />
     </AppGrid>
   )
 }
@@ -56,6 +56,6 @@ const StyledMain = styled.main`
 `
 const AppGrid = styled.div`
   display: grid;
-  grid-template-rows: auto 56px;
+  grid-template-rows: 56px auto;
   height: 100vh;
 `

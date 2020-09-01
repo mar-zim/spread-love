@@ -1,36 +1,22 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
+import React from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import useLocation from '../services/useLocation'
 import Button from './Button'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
-  const [userLocation, setUserLocation] = useState('')
-  const [userLocationIsLoading, setUserLocationIsLoading] = useState(true)
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      const lat = position.coords.latitude
-      const lon = position.coords.longitude
-
-      axios
-        .get(
-          `https://eu1.locationiq.com/v1/reverse.php?key=pk.bdf564897f7c87e4a19e06e928604689&lat=${lat}&lon=${lon}&format=json`
-        )
-        .then((response) => response.data)
-        .then((data) => setUserLocation(data.display_name))
-        .catch((error) => console.log(error.message))
-        .finally(setUserLocationIsLoading(false))
-    })
-  }, [])
-
+  const [userLocation, userLocationIsLoading] = useLocation() //custom hook to fetch human readable location data from geolocation
+  const history = useHistory()
   const inputId = uuidv4()
+
+  //custom hooks of react-hook-form library to use form
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
       defaultValues: {
-        friends: [{ firstName: '', lastName: '' }],
+        friends: [{ name: '' }],
       },
     }
   )
@@ -42,37 +28,31 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   function onSubmit(newEncounter) {
     setEncounters([...encounters, newEncounter])
-    reset()
+    reset() //reset form values on only successful submit
+    history.push('/') // go back to home page
   }
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       {fields.map((item, index) => {
+        //creating dynamic input fields, so that user can add more than one friends name
         return (
           <div key={item.id}>
             <StyledNameInput
-              name={`friends[${index}].firstName`}
-              defaultValue={`${item.firstName}`}
+              name={`friends[${index}].name`}
+              defaultValue={`${item.name}`}
               ref={register()}
-              placeholder="First Name"
-            />
-            <StyledNameInput
-              name={`friends[${index}].lastName`}
-              defaultValue={`${item.lastName}`}
-              ref={register({
-                required: true,
-              })}
-              placeholder="Last Name"
+              placeholder="Enter first name and last name"
             />
             <Button type="button" onClick={() => remove(index)} text="x" />
           </div>
         )
       })}
-      <Button
+      <Button //button to add more input fields for names
         type="button"
         text="Add more people"
         onClick={() => {
-          append({ firstName: '', lastName: '' })
+          append({ name: '' })
         }}
       />
       {errors.friends && (
@@ -88,11 +68,12 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         })}
         placeholder="Pick a date"
       />
+
       {errors.date && (
         <StyledErrorMessage>Please select a date</StyledErrorMessage>
       )}
       {userLocationIsLoading ? (
-        <div>Getting your current location data..</div>
+        <div>Trying to get your current location data...</div>
       ) : (
         <textarea
           name="location"
@@ -100,7 +81,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           ref={register({
             required: true,
           })}
-          placeholder="Location"
+          placeholder="Please type your location"
         />
       )}
       {errors.location && (
@@ -115,7 +96,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       <Button
         type="submit"
         disabled={formState.isSubmitting}
-        text="Add to List"
+        text="Add entry to list"
       />
     </StyledForm>
   )
@@ -137,6 +118,5 @@ const StyledErrorMessage = styled.div`
 `
 
 const StyledNameInput = styled.input`
-  width: 40%;
   margin-right: 1%;
 `

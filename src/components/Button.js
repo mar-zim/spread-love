@@ -19,7 +19,7 @@ const StyledButton = styled.button`
   text-align: center;
   color: var(--white);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   &:active {
     position: relative;
     top: 2px;

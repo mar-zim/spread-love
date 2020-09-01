@@ -9,9 +9,7 @@ export default function ListItem({ encounter }) {
       <div>People:</div>
       <ul>
         {encounter.friends.map((friend) => (
-          <li key={friend.firstName + friend.lastName}>
-            {friend.firstName} {friend.lastName}
-          </li>
+          <li key={friend.name}>{friend.name}</li>
         ))}
       </ul>
       <div>Location: </div>

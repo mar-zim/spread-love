@@ -1,21 +1,33 @@
 import React, { useState } from 'react'
+import Button from '../components/Button'
 import EncounterList from '../components/EncounterList'
 import Search from '../components/Search'
-import { sortAllEncounters } from '../services/SortEntries'
+import {
+  sortAllEncounters,
+  sortEncountersLast14Days,
+} from '../services/SortEntries'
 
 export default function SearchEntriesPage({ encounters }) {
+  //displayAllEncounters is used to toggle between all entries and the entries in last 14 days
+  const [displayAllEncounters, setDisplayAllEncounters] = useState(true)
+
   const allEncountersSorted = sortAllEncounters(encounters)
+  const encountersLast14DaysSorted = sortEncountersLast14Days(encounters)
+
+  //the selectedEncounters are set depending on whether all entries or last 14 day entries are selected
+  const selectedEncounters = displayAllEncounters
+    ? allEncountersSorted
+    : encountersLast14DaysSorted
+
   const [searchTerm, setSearchTerm] = useState('')
 
-  const [display, setDisplay] = useState(false)
-
   const results = searchTerm
-    ? allEncountersSorted.filter((encounter) =>
+    ? selectedEncounters.filter((encounter) =>
         encounter.friends.find((friend) =>
-          friend.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+          friend.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
       )
-    : allEncountersSorted
+    : selectedEncounters
 
   return (
     <>
@@ -23,10 +35,13 @@ export default function SearchEntriesPage({ encounters }) {
       <Search
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}
-        setDisplay={setDisplay}
-        display={display}
         encounters={encounters}
       />
+      <h2>{displayAllEncounters ? 'All entries' : 'Entries last 14 days'}</h2>
+      <Button
+        onClick={() => setDisplayAllEncounters(!displayAllEncounters)}
+        text={displayAllEncounters ? 'Show last 14 days' : 'Show all entries'}
+      ></Button>
       <EncounterList shownEntries={results} />
     </>
   )
