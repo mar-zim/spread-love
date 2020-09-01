@@ -88,7 +88,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           ref={register({
             required: true,
           })}
-          placeholder="Date"
+          placeholder="Pick a date"
         />
         {errors.date && <div>Please select a date</div>}
         {userLocationIsLoading ? (

@@ -2,9 +2,10 @@ import React from 'react'
 import ListItem from './ListItem'
 
 export default function EncounterList({ encounters }) {
-  const sortedEncounters = encounters.slice().sort((a, b) => b.date - a.date)
+  const sortedEncounters = encounters
+    .slice()
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
 
-  console.log(sortedEncounters)
   return (
     <>
       <h3>People you met</h3>

@@ -7,7 +7,6 @@ export default function Home() {
   const [encounters, setEncounters] = useState(
     loadFromLocal('encounterList') || []
   )
-  console.log(encounters)
 
   useEffect(() => {
     saveToLocal('encounterList', encounters)
