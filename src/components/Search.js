@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 export default function Search({
   setSearchTerm,
@@ -40,7 +41,7 @@ export default function Search({
         onClick={() => setDisplay(!display)}
       />
       {display && (
-        <div>
+        <StyledAutoCompleteDropdown>
           {autocompleteOptions
             .filter((option) => option.indexOf(searchTerm.toLowerCase()) > -1)
             .map((value, index) => {
@@ -50,8 +51,19 @@ export default function Search({
                 </div>
               )
             })}
-        </div>
+        </StyledAutoCompleteDropdown>
       )}
     </div>
   )
 }
+
+const StyledAutoCompleteDropdown = styled.div`
+  z-index: 1000;
+  position: absolute;
+  min-width: 40%;
+  border: 1px solid var(--grey-1);
+  div {
+    padding: 2px;
+    background-color: #ffffff;
+  }
+`
