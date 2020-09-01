@@ -34,11 +34,10 @@ export default function Search({
     <div>
       <input
         type="text"
-        placeholder="Enter first name to search"
+        placeholder="Search people by first name"
         value={searchTerm}
         onChange={handleSearch}
         onClick={() => setDisplay(!display)}
-        onBlur={() => setDisplay(false)}
       />
       {display && (
         <div>

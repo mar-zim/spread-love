@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import Button from './Button'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, setUserLocation] = useState('')
@@ -50,13 +51,13 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       {fields.map((item, index) => {
         return (
           <div key={item.id}>
-            <input
+            <StyledNameInput
               name={`friends[${index}].firstName`}
               defaultValue={`${item.firstName}`}
               ref={register()}
               placeholder="First Name"
             />
-            <input
+            <StyledNameInput
               name={`friends[${index}].lastName`}
               defaultValue={`${item.lastName}`}
               ref={register({
@@ -64,21 +65,22 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
               })}
               placeholder="Last Name"
             />
-            <button type="button" onClick={() => remove(index)}>
-              x
-            </button>
+            <Button type="button" onClick={() => remove(index)} text="x" />
           </div>
         )
       })}
-      <button
+      <Button
         type="button"
+        text="Add more people"
         onClick={() => {
           append({ firstName: '', lastName: '' })
         }}
-      >
-        Add more friends
-      </button>
-      {errors.friends && <div>Please enter first and last name</div>}
+      />
+      {errors.friends && (
+        <StyledErrorMessage>
+          Please enter first and last name
+        </StyledErrorMessage>
+      )}
       <input
         type="date"
         name="date"
@@ -87,7 +89,9 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         })}
         placeholder="Pick a date"
       />
-      {errors.date && <div>Please select a date</div>}
+      {errors.date && (
+        <StyledErrorMessage>Please select a date</StyledErrorMessage>
+      )}
       {/* {userLocationIsLoading ? (
           <div>Getting your current location data..</div>
         ) : ( */}
@@ -100,7 +104,9 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         placeholder="Location"
       />
       {/* )} */}
-      {errors.location && <div>Please enter a location</div>}
+      {errors.location && (
+        <StyledErrorMessage>Please enter a location</StyledErrorMessage>
+      )}
       <input
         name="entryId"
         type="hidden"
@@ -110,9 +116,11 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       {/* <button type="button" onClick={getLocation}>
           Get Location
         </button> */}
-      <button type="submit" disabled={formState.isSubmitting}>
-        Submit
-      </button>
+      <Button
+        type="submit"
+        disabled={formState.isSubmitting}
+        text="Add to List"
+      />
     </StyledForm>
   )
 }
@@ -120,5 +128,19 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
+
+  textarea {
+    height: 60px;
+  }
+`
+
+const StyledErrorMessage = styled.div`
+  color: var(--orange);
+  font-size: 12px;
+`
+
+const StyledNameInput = styled.input`
+  width: 40%;
+  margin-right: 1%;
 `
