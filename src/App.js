@@ -18,6 +18,7 @@ export default function App() {
 
   return (
     <AppGrid>
+      <Navigation />
       <StyledMain>
         <Switch>
           <Route
@@ -40,7 +41,6 @@ export default function App() {
           />
         </Switch>
       </StyledMain>
-      <Navigation />
     </AppGrid>
   )
 }
@@ -56,6 +56,6 @@ const StyledMain = styled.main`
 `
 const AppGrid = styled.div`
   display: grid;
-  grid-template-rows: auto 56px;
+  grid-template-rows: 56px auto;
   height: 100vh;
 `
