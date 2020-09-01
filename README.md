@@ -27,10 +27,10 @@ Take a look at the app here [here](https://coding-challenge-mariuccia.vercel.app
 
 ## How to set it up
 
-- clone this repository
+- download zip-file of this repository
 - install all npm dependencies  
    `npm install`
-- to run the app in development mode `npm start`, then open [http://localhost:3000](http://localhost:3000) to view it in the browser. Please be aware, that the encoding of the geodata will not work, if you use any other localhosts.
+- to run the app in development mode `npm run start`, then open [http://localhost:3000](http://localhost:3000) to view it in the browser. Please be aware, that the encoding of the geodata will not work, if you use any other localhosts.
 - to create a build ready for deploying:
   `npm run build`
 
