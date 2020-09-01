@@ -1,37 +1,16 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import useLocation from '../services/useLocation'
 import Button from './Button'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
+  const [userLocation, userLocationIsLoading] = useLocation()
   const history = useHistory()
-  const [userLocation, setUserLocation] = useState('')
-  const [userLocationIsLoading, setUserLocationIsLoading] = useState(true)
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      const lat = position.coords.latitude
-      const lon = position.coords.longitude
-
-      axios
-        .get(
-          `https://eu1.locationiq.com/v1/reverse.php?key=pk.bdf564897f7c87e4a19e06e928604689&lat=${lat}&lon=${lon}&format=json`
-        )
-        .then((response) => response.data)
-        .then((data) => setUserLocation(data.display_name))
-        .catch((error) => console.log(error.message))
-        .finally(setUserLocationIsLoading(false))
-    })
-
-    setTimeout(function () {
-      setUserLocationIsLoading(false)
-    }, 10000)
-  }, [])
-
   const inputId = uuidv4()
+
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
