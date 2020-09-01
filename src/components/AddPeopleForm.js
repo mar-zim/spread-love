@@ -9,21 +9,21 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, setUserLocation] = useState('')
   const [userLocationIsLoading, setUserLocationIsLoading] = useState(true)
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      const lat = position.coords.latitude
-      const lon = position.coords.longitude
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(function (position) {
+  //     const lat = position.coords.latitude
+  //     const lon = position.coords.longitude
 
-      axios
-        .get(
-          `https://eu1.locationiq.com/v1/reverse.php?key=pk.bdf564897f7c87e4a19e06e928604689&lat=${lat}&lon=${lon}&format=json`
-        )
-        .then((response) => response.data)
-        .then((data) => setUserLocation(data.display_name))
-        .catch((error) => console.log(error.message))
-        .finally(setUserLocationIsLoading(false))
-    })
-  }, [])
+  //     axios
+  //       .get(
+  //         `https://eu1.locationiq.com/v1/reverse.php?key=pk.bdf564897f7c87e4a19e06e928604689&lat=${lat}&lon=${lon}&format=json`
+  //       )
+  //       .then((response) => response.data)
+  //       .then((data) => setUserLocation(data.display_name))
+  //       .catch((error) => console.log(error.message))
+  //       .finally(setUserLocationIsLoading(false))
+  //   })
+  // }, [])
 
   const inputId = uuidv4()
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
@@ -91,18 +91,18 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           placeholder="Pick a date"
         />
         {errors.date && <div>Please select a date</div>}
-        {userLocationIsLoading ? (
+        {/* {userLocationIsLoading ? (
           <div>Getting your current location data..</div>
-        ) : (
-          <textarea
-            name="location"
-            defaultValue={userLocation}
-            ref={register({
-              required: true,
-            })}
-            placeholder="Press button below to get current location"
-          />
-        )}
+        ) : ( */}
+        <textarea
+          name="location"
+          defaultValue={userLocation}
+          ref={register({
+            required: true,
+          })}
+          placeholder="Press button below to get current location"
+        />
+        {/* )} */}
         {errors.location && <div>Please enter a location</div>}
         <input
           name="entryId"

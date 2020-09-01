@@ -28,19 +28,11 @@ export default function Search({
       {display && (
         <div>
           {options
-            .filter(
-              ({ firstName }) =>
-                firstName.indexOf(searchTerm.toLowerCase()) > -1
-            )
+            .filter((option) => option.indexOf(searchTerm.toLowerCase()) > -1)
             .map((value, index) => {
               return (
-                <div
-                  onClick={() => selectName(value.firstName)}
-                  className="option"
-                  key={index}
-                  tabIndex="0"
-                >
-                  <span>{value.firstName}</span>
+                <div onClick={() => selectName(value)} key={index}>
+                  <span>{value}</span>
                 </div>
               )
             })}

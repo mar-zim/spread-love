@@ -12,11 +12,16 @@ export default function EncounterList({ encounters }) {
   const [display, setDisplay] = useState(false)
 
   useEffect(() => {
-    let friendArray = []
-    encounters.forEach(
-      (encounter) => (friendArray = [...friendArray, ...encounter.friends])
+    let friendFirstNameArray = []
+    encounters.forEach((encounter) =>
+      encounter.friends.forEach(
+        (friend) =>
+          (friendFirstNameArray = [...friendFirstNameArray, friend.firstName])
+      )
     )
-    setAutocompleteOptions(friendArray)
+    console.log(friendFirstNameArray)
+    const uniqueFirstNames = [...new Set(friendFirstNameArray)]
+    setAutocompleteOptions(uniqueFirstNames)
   }, [])
 
   console.log('Options:', autocompleteOptions)
