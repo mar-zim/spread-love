@@ -1,20 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Search({
   setSearchTerm,
   searchTerm,
   setDisplay,
   display,
-  options,
+  encounters,
 }) {
+  const [autocompleteOptions, setAutocompleteOptions] = useState([])
+
   function handleSearch(event) {
     setSearchTerm(event.target.value)
   }
 
-  const selectName = (name) => {
+  function selectName(name) {
     setSearchTerm(name)
     setDisplay(false)
   }
+
+  useEffect(() => {
+    let friendFirstNameArray = []
+    encounters.forEach((encounter) =>
+      encounter.friends.forEach(
+        (friend) =>
+          (friendFirstNameArray = [...friendFirstNameArray, friend.firstName])
+      )
+    )
+    const uniqueFirstNames = [...new Set(friendFirstNameArray)]
+    setAutocompleteOptions(uniqueFirstNames)
+  }, [])
 
   return (
     <div>
@@ -28,7 +42,7 @@ export default function Search({
       />
       {display && (
         <div>
-          {options
+          {autocompleteOptions
             .filter((option) => option.indexOf(searchTerm.toLowerCase()) > -1)
             .map((value, index) => {
               return (

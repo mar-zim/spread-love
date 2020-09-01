@@ -20,7 +20,11 @@ export default function App() {
     <AppGrid>
       <StyledMain>
         <Switch>
-          <Route exact path="/" component={() => <HomePage />} />
+          <Route
+            exact
+            path="/"
+            component={() => <HomePage encounters={encounters} />}
+          />
           <Route
             path="/addentry"
             component={() => (
