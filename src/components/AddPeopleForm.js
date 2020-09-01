@@ -23,6 +23,10 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         .catch((error) => console.log(error.message))
         .finally(setUserLocationIsLoading(false))
     })
+
+    setTimeout(function () {
+      setUserLocationIsLoading(false)
+    }, 10000)
   }, [])
 
   const inputId = uuidv4()
@@ -88,11 +92,12 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         })}
         placeholder="Pick a date"
       />
+
       {errors.date && (
         <StyledErrorMessage>Please select a date</StyledErrorMessage>
       )}
       {userLocationIsLoading ? (
-        <div>Getting your current location data..</div>
+        <div>Trying to get your current location data...</div>
       ) : (
         <textarea
           name="location"
@@ -100,7 +105,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           ref={register({
             required: true,
           })}
-          placeholder="Location"
+          placeholder="Please type your location"
         />
       )}
       {errors.location && (
