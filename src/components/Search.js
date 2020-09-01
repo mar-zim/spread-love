@@ -20,22 +20,22 @@ export default function Search({
   }
 
   useEffect(() => {
-    let friendFirstNameArray = []
+    let friendNameArray = []
     encounters.forEach((encounter) =>
       encounter.friends.forEach(
         (friend) =>
-          (friendFirstNameArray = [...friendFirstNameArray, friend.firstName])
+          (friendNameArray = [...friendNameArray, friend.name.toLowerCase()])
       )
     )
-    const uniqueFirstNames = [...new Set(friendFirstNameArray)]
-    setAutocompleteOptions(uniqueFirstNames)
+    const uniqueNames = [...new Set(friendNameArray)]
+    setAutocompleteOptions(uniqueNames)
   }, [])
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Search people by first name"
+        placeholder="Search for entries by friend's name"
         value={searchTerm}
         onChange={handleSearch}
         onClick={() => setDisplay(!display)}
@@ -60,7 +60,6 @@ export default function Search({
 const StyledAutoCompleteDropdown = styled.div`
   z-index: 1000;
   position: absolute;
-  top: -15px;
   min-width: 40%;
   border: 1px solid var(--grey-1);
   div {

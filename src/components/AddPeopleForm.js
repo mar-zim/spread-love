@@ -15,7 +15,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
     {
       mode: 'onBlur',
       defaultValues: {
-        friends: [{ firstName: '', lastName: '' }],
+        friends: [{ name: '' }],
       },
     }
   )
@@ -27,6 +27,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   function onSubmit(newEncounter) {
     setEncounters([...encounters, newEncounter])
+    console.log(newEncounter.friends)
     reset()
     history.push('/')
   }
@@ -37,18 +38,10 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         return (
           <div key={item.id}>
             <StyledNameInput
-              name={`friends[${index}].firstName`}
-              defaultValue={`${item.firstName}`}
+              name={`friends[${index}].name`}
+              defaultValue={`${item.name}`}
               ref={register()}
-              placeholder="First Name"
-            />
-            <StyledNameInput
-              name={`friends[${index}].lastName`}
-              defaultValue={`${item.lastName}`}
-              ref={register({
-                required: true,
-              })}
-              placeholder="Last Name"
+              placeholder="Enter first name and last name"
             />
             <Button type="button" onClick={() => remove(index)} text="x" />
           </div>
@@ -58,7 +51,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         type="button"
         text="Add more people"
         onClick={() => {
-          append({ firstName: '', lastName: '' })
+          append({ name: '' })
         }}
       />
       {errors.friends && (
@@ -124,6 +117,5 @@ const StyledErrorMessage = styled.div`
 `
 
 const StyledNameInput = styled.input`
-  width: 40%;
   margin-right: 1%;
 `

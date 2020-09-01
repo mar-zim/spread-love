@@ -20,7 +20,7 @@ export default function SearchEntriesPage({ encounters }) {
   const results = searchTerm
     ? selectedEncounters.filter((encounter) =>
         encounter.friends.find((friend) =>
-          friend.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+          friend.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
       )
     : selectedEncounters
