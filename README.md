@@ -1,13 +1,13 @@
 <div align="center">
   <img src="./public/logo.svg"
-     height="40px"/>
+     height="60px"/>
 </div>
 
 ---
 
-## Track who you have met
+## Spread love, not viruses
 
-### Because the Gesundheitsamt might ask you for this information
+#### Track who you have met
 
 Take a look at the app here [here](https://coding-challenge-mariuccia.vercel.app/).
 
