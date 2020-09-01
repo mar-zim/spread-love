@@ -12,6 +12,9 @@
 /build
 
 # misc
+.vscode
+dist
+.cache
 .DS_Store
 .env.local
 .env.development.local
