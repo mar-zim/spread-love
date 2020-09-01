@@ -60,6 +60,7 @@ export default function Search({
 const StyledAutoCompleteDropdown = styled.div`
   z-index: 1000;
   position: absolute;
+  top: -15px;
   min-width: 40%;
   border: 1px solid var(--grey-1);
   div {

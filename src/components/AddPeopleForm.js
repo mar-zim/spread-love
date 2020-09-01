@@ -1,11 +1,13 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
+import React, { useEffect, useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import Button from './Button'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
+  const history = useHistory()
   const [userLocation, setUserLocation] = useState('')
   const [userLocationIsLoading, setUserLocationIsLoading] = useState(true)
 
@@ -47,6 +49,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   function onSubmit(newEncounter) {
     setEncounters([...encounters, newEncounter])
     reset()
+    history.push('/')
   }
 
   return (
@@ -120,7 +123,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       <Button
         type="submit"
         disabled={formState.isSubmitting}
-        text="Add to List"
+        text="Add entry to list"
       />
     </StyledForm>
   )
