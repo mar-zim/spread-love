@@ -1,3 +1,10 @@
+<div align="center">
+  <img src="./public/logo.svg"
+     height="40px"/>
+</div>
+
+---
+
 ## Track who you have met
 
 ### Because the Gesundheitsamt might ask you for this information

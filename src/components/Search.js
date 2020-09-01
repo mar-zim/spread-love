@@ -29,7 +29,7 @@ export default function Search({
     )
     const uniqueFirstNames = [...new Set(friendFirstNameArray)]
     setAutocompleteOptions(uniqueFirstNames)
-  }, [encounters])
+  }, [])
 
   return (
     <div>
