@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import Button from '../components/Button'
 import EncounterList from '../components/EncounterList'
 import Search from '../components/Search'
 import {
   sortAllEncounters,
   sortEncountersLast14Days,
 } from '../services/SortEntries'
-import Button from '../components/Button'
 
 export default function SearchEntriesPage({ encounters }) {
   const [displayAllEncounters, setDisplayAllEncounters] = useState(true)

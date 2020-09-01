@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+import Navigation from './components/Navigation'
 import AddEntryPage from './pages/AddEntryPage'
 import HomePage from './pages/HomePage'
 import SearchEntriesPage from './pages/SearchEntriesPage'
-import { saveToLocal, loadFromLocal } from './services/LocalStorage'
-import Navigation from './components/Navigation'
+import { loadFromLocal, saveToLocal } from './services/LocalStorage'
 
 export default function App() {
   const [encounters, setEncounters] = useState(
