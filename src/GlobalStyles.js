@@ -27,28 +27,47 @@ body {
   color: var(--grey-2);
 }
 
-h1, h2, h3, h4, h5{
-  margin: 6px 0;
+h1, h2, h3, h4 {
+  margin: 20px 0 6px 0;
   font-family: var(--fontheader);
   font-weight: normal;
-  color: var(--grey-3);
+  color: var(--darkblue);
 }
 
 h1 {
-  font-size: 48px;
-}
-
-h2 {
   font-size: 32px;
 }
 
-h3 {
+h2 {
   font-size: 24px;
-  color: var(--grey-2);
+}
+
+h3 {
+  font-size: 20px;
+  color: var(--lightblue);
 }
 
 h4 {
-  font-size: 20px;
-  color: var(--grey-2);
+  font-size: 16px;
+  color: var(--lightblue);
 }
+
+input, textarea {
+    padding: 0 5px;
+    margin-top: 5px;
+    border: 1px solid var(--lightblue);
+    border-radius: 3px;
+    height: 30px;
+    width: 80%;
+    font-family: var(--fontbody);
+    font-size: 16px;
+    ::placeholder {
+      color: var(--grey-1);
+      font-size: 14px;
+    }
+    &:focus {
+      outline: none;
+      border: 1px solid var(--orange);
+    }
+  }
 `

@@ -1,16 +1,16 @@
 import React from 'react'
 import ListItem from './ListItem'
 
-export default function EncounterList({ encounters }) {
-  const sortedEncounters = encounters.slice().sort((a, b) => b.date - a.date)
-
-  console.log(sortedEncounters)
+export default function EncounterList({ shownEntries }) {
   return (
     <>
-      <h3>People you met</h3>
-      {sortedEncounters.map((encounter) => (
-        <ListItem encounter={encounter} key={encounter.entryId} />
-      ))}
+      {shownEntries.length > 0 ? (
+        shownEntries.map((encounter) => (
+          <ListItem encounter={encounter} key={encounter.entryId} />
+        ))
+      ) : (
+        <div>No entries</div>
+      )}
     </>
   )
 }
