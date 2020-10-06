@@ -8,13 +8,11 @@ import {
 } from '../services/SortEntries'
 
 export default function SearchEntriesPage({ encounters }) {
-  //displayAllEncounters is used to toggle between all entries and the entries in last 14 days
   const [displayAllEncounters, setDisplayAllEncounters] = useState(true)
 
   const allEncountersSorted = sortAllEncounters(encounters)
   const encountersLast14DaysSorted = sortEncountersLast14Days(encounters)
 
-  //the selectedEncounters are set depending on whether all entries or last 14 day entries are selected
   const selectedEncounters = displayAllEncounters
     ? allEncountersSorted
     : encountersLast14DaysSorted

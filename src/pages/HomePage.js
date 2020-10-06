@@ -7,7 +7,6 @@ export default function HomePage({ encounters }) {
 
   return (
     <>
-      <h1>Welcome!</h1>
       <img src={process.env.PUBLIC_URL + '/logo.svg'} alt="logo" />
       <div>
         Below you see your list of friends, you met in the last 14 days -

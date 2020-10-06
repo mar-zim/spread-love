@@ -9,13 +9,11 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
     setSearchTerm(event.target.value)
   }
 
-  //function to hide the autocomplete options and take the selected name as search parameter, when a name is selcted from the autocomplete list
   function selectName(name) {
     setSearchTerm(name)
     setShowDropdown(false)
   }
 
-  //when the component mounts, an array is created that contains all the entered names as unique values. this array is used for the dropdown of the autocomplete options
   useEffect(() => {
     let friendNameArray = []
     encounters.forEach((encounter) =>

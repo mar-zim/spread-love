@@ -7,11 +7,10 @@ import useLocation from '../services/useLocation'
 import Button from './Button'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
-  const [userLocation, userLocationIsLoading] = useLocation() //custom hook to fetch human readable location data from geolocation
+  const [userLocation, userLocationIsLoading] = useLocation()
   const history = useHistory()
   const inputId = uuidv4()
 
-  //custom hooks of react-hook-form library to use form
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
@@ -28,14 +27,13 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   function onSubmit(newEncounter) {
     setEncounters([...encounters, newEncounter])
-    reset() //reset form values on only successful submit
-    history.push('/') // go back to home page
+    reset()
+    history.push('/')
   }
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       {fields.map((item, index) => {
-        //creating dynamic input fields, so that user can add more than one friends name
         return (
           <div key={item.id}>
             <StyledNameInput
@@ -50,7 +48,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           </div>
         )
       })}
-      <Button //button to add more input fields for names
+      <Button
         type="button"
         text="Add more people"
         onClick={() => {
