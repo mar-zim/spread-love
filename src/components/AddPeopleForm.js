@@ -26,6 +26,12 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   })
 
   function onSubmit(newEncounter) {
+    console.log(newEncounter)
+    // console.log(
+    //   newEncounter.friends.map(function (item) {
+    //     return item['name']
+    //   })
+    // )
     setEncounters([...encounters, newEncounter])
     reset()
     history.push('/')
