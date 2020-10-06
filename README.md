@@ -9,7 +9,7 @@
 
 #### Track who you have met
 
-Take a look at the app here [here](https://coding-challenge-mariuccia.vercel.app/).
+Take a look at the app here [here](https://spreadlove-notviruses.web.app/).
 
 ---
 
