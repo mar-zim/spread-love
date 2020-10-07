@@ -18,13 +18,20 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
     let friendNameArray = []
     encounters.forEach((encounter) =>
       encounter.friends.forEach(
-        (friend) =>
-          (friendNameArray = [...friendNameArray, friend.name.toLowerCase()])
+        (friend) => (friendNameArray = [...friendNameArray, friend.name])
       )
     )
     const uniqueNames = [...new Set(friendNameArray)]
     setAutocompleteOptions(uniqueNames)
   }, [])
+
+  function findMatches(wordToMatch, names) {
+    return names.filter((name) => {
+      const regex = new RegExp(wordToMatch, 'gi')
+      return name.match(regex)
+    })
+  }
+  const matchArray = findMatches(searchTerm, autocompleteOptions)
 
   return (
     <div>
@@ -37,15 +44,13 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
       />
       {showDropdown && (
         <StyledAutoCompleteDropdown>
-          {autocompleteOptions
-            .filter((option) => option.indexOf(searchTerm.toLowerCase()) > -1)
-            .map((value, index) => {
-              return (
-                <div onClick={() => selectName(value)} key={index}>
-                  <span>{value}</span>
-                </div>
-              )
-            })}
+          {matchArray.map((value, index) => {
+            return (
+              <div onClick={() => selectName(value)} key={index}>
+                <span>{value}</span>
+              </div>
+            )
+          })}
         </StyledAutoCompleteDropdown>
       )}
     </div>
