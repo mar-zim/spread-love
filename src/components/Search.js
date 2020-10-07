@@ -40,7 +40,8 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
         placeholder="Search for entries by friend's name"
         value={searchTerm}
         onChange={handleSearch}
-        onClick={() => setShowDropdown(!showDropdown)}
+        onBlur={() => setShowDropdown(!showDropdown)}
+        onKeyDown={() => setShowDropdown(true)}
       />
       {showDropdown && (
         <StyledAutoCompleteDropdown>
