@@ -46,13 +46,15 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
               })}
               placeholder="Please enter a name"
             />
-            <Button
-              type="button"
-              backgroundColor="var(--white)"
-              color="var(--darkblue)"
-              onClick={() => remove(index)}
-              text="x"
-            />
+            {index > 0 && (
+              <Button
+                type="button"
+                backgroundColor="var(--white)"
+                color="var(--darkblue)"
+                onClick={() => remove(index)}
+                text="x"
+              />
+            )}
           </div>
         )
       })}
@@ -66,9 +68,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
         }}
       />
       {errors.friends && (
-        <StyledErrorMessage>
-          Please enter first and last name
-        </StyledErrorMessage>
+        <StyledErrorMessage>Please enter at least one name</StyledErrorMessage>
       )}
       <StyledLabel htmlFor="date">When did you meet?</StyledLabel>
       <input
@@ -83,7 +83,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       {errors.date && (
         <StyledErrorMessage>Please select a date</StyledErrorMessage>
       )}
-      <StyledLabel htmlFor="date">When did you meet?</StyledLabel>
+      <StyledLabel htmlFor="date">Where did you meet?</StyledLabel>
       {userLocationIsLoading ? (
         <div>Trying to get your current location data...</div>
       ) : (
