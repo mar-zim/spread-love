@@ -55,10 +55,13 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
 const StyledAutoCompleteDropdown = styled.div`
   z-index: 1000;
   position: absolute;
-  min-width: 40%;
-  border: 1px solid var(--grey-1);
+  width: 80vw;
+  background-color: #ffffff;
   div {
-    padding: 2px;
+    padding: 2px 0 2px 15px;
     background-color: #ffffff;
+    &:hover {
+      color: var(--orange);
+    }
   }
 `

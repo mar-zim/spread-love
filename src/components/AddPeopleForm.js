@@ -27,11 +27,6 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   function onSubmit(newEncounter) {
     console.log(newEncounter)
-    // console.log(
-    //   newEncounter.friends.map(function (item) {
-    //     return item['name']
-    //   })
-    // )
     setEncounters([...encounters, newEncounter])
     reset()
     history.push('/')
@@ -39,6 +34,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledLabel>Who did you meet?</StyledLabel>
       {fields.map((item, index) => {
         return (
           <div key={item.id}>
@@ -50,13 +46,21 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
               })}
               placeholder="Please enter a name"
             />
-            <Button type="button" onClick={() => remove(index)} text="x" />
+            <Button
+              type="button"
+              backgroundColor="var(--white)"
+              color="var(--darkblue)"
+              onClick={() => remove(index)}
+              text="x"
+            />
           </div>
         )
       })}
       <Button
         type="button"
         text="Add more people"
+        backgroundColor="var(--white)"
+        color="var(--darkblue)"
         onClick={() => {
           append({ name: '' })
         }}
@@ -66,6 +70,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
           Please enter first and last name
         </StyledErrorMessage>
       )}
+      <StyledLabel htmlFor="date">When did you meet?</StyledLabel>
       <input
         type="date"
         name="date"
@@ -78,6 +83,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       {errors.date && (
         <StyledErrorMessage>Please select a date</StyledErrorMessage>
       )}
+      <StyledLabel htmlFor="date">When did you meet?</StyledLabel>
       {userLocationIsLoading ? (
         <div>Trying to get your current location data...</div>
       ) : (
@@ -125,4 +131,8 @@ const StyledErrorMessage = styled.div`
 
 const StyledNameInput = styled.input`
   margin-right: 1%;
+`
+const StyledLabel = styled.label`
+  margin-bottom: 0;
+  margin-top: 15px;
 `
