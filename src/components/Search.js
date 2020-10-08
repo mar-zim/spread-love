@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import useAutocompleteOptions from '../services/useAutocompleteOptions'
 
 export default function Search({ setSearchTerm, searchTerm, encounters }) {
-  const [autocompleteOptions, setAutocompleteOptions] = useState([])
   const [showDropdown, setShowDropdown] = useState(false)
+  const autocompleteOptions = useAutocompleteOptions(encounters)
+  const matchArray = findMatches(searchTerm, autocompleteOptions)
+
+  function findMatches(wordToMatch, names) {
+    return names.filter((name) => {
+      const regex = new RegExp(wordToMatch, 'gi')
+      return name.match(regex)
+    })
+  }
 
   function handleSearch(event) {
     setSearchTerm(event.target.value)
@@ -14,29 +23,10 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
     setShowDropdown(false)
   }
 
-  useEffect(() => {
-    let friendNameArray = []
-    encounters.forEach((encounter) =>
-      encounter.friends.forEach(
-        (friend) => (friendNameArray = [...friendNameArray, friend.name])
-      )
-    )
-    const uniqueNames = [...new Set(friendNameArray)]
-    setAutocompleteOptions(uniqueNames)
-  }, [])
-
-  function findMatches(wordToMatch, names) {
-    return names.filter((name) => {
-      const regex = new RegExp(wordToMatch, 'gi')
-      return name.match(regex)
-    })
-  }
-
   function clearSearch() {
     setShowDropdown(false)
     setSearchTerm('')
   }
-  const matchArray = findMatches(searchTerm, autocompleteOptions)
 
   return (
     <StyledSearchbox>
