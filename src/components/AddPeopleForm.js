@@ -28,7 +28,6 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   })
 
   function onSubmit(newEncounter) {
-    console.log(newEncounter)
     setEncounters([...encounters, newEncounter])
     reset()
     history.push('/')
