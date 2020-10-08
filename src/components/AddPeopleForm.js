@@ -3,6 +3,7 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import GetToday from '../services/GetToday'
 import useLocation from '../services/useLocation'
 import Button from './Button'
 
@@ -10,6 +11,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
   const [userLocation, userLocationIsLoading] = useLocation()
   const history = useHistory()
   const inputId = uuidv4()
+  const today = GetToday()
 
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
@@ -74,6 +76,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       <input
         type="date"
         name="date"
+        max={today}
         ref={register({
           required: true,
         })}
