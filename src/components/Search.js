@@ -31,18 +31,23 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
       return name.match(regex)
     })
   }
+
+  function clearSearch() {
+    setShowDropdown(false)
+    setSearchTerm('')
+  }
   const matchArray = findMatches(searchTerm, autocompleteOptions)
 
   return (
-    <div>
+    <StyledSearchbox>
       <input
         type="text"
         placeholder="Search for entries by friend's name"
         value={searchTerm}
         onChange={handleSearch}
-        onBlur={() => setShowDropdown(!showDropdown)}
-        onKeyDown={() => setShowDropdown(true)}
+        onClick={() => setShowDropdown(!showDropdown)}
       />
+      <StyledClearSearch onClick={clearSearch}>x</StyledClearSearch>
       {showDropdown && (
         <StyledAutoCompleteDropdown>
           {matchArray.map((value, index) => {
@@ -54,9 +59,13 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
           })}
         </StyledAutoCompleteDropdown>
       )}
-    </div>
+    </StyledSearchbox>
   )
 }
+
+const StyledSearchbox = styled.div`
+  position: relative;
+`
 
 const StyledAutoCompleteDropdown = styled.div`
   z-index: 1000;
@@ -70,4 +79,13 @@ const StyledAutoCompleteDropdown = styled.div`
       color: var(--orange);
     }
   }
+`
+
+const StyledClearSearch = styled.div`
+  position: absolute;
+  right: 15%;
+  top: 0;
+  font-size: 18px;
+  color: var(--orange);
+  cursor: pointer;
 `
