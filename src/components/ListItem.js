@@ -1,10 +1,18 @@
 import React from 'react'
 import { HorizontalLine } from './HorizontalLine'
 import styled from 'styled-components'
+import { deleteFromLocal } from '../services/LocalStorage'
 
-export default function ListItem({ encounter }) {
+export default function ListItem({ encounter, setEncounters }) {
   return (
     <ListItemGrid>
+      <StyledLink
+        onClick={() =>
+          deleteFromLocal('encounterList', encounter.entryId, setEncounters)
+        }
+      >
+        Delete
+      </StyledLink>
       <h4>Date: {encounter.date}</h4>
       <div>People:</div>
       <ul>
@@ -18,6 +26,13 @@ export default function ListItem({ encounter }) {
     </ListItemGrid>
   )
 }
+
+const StyledLink = styled.div`
+  color: var(--orange);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 12px;
+`
 
 const ListItemGrid = styled.section`
   display: grid;

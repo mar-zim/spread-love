@@ -11,7 +11,6 @@ export default function App() {
   const [encounters, setEncounters] = useState(
     loadFromLocal('encounterList') || []
   )
-
   useEffect(() => {
     saveToLocal('encounterList', encounters)
   }, [encounters])
@@ -37,7 +36,12 @@ export default function App() {
           />
           <Route
             path="/search"
-            component={() => <SearchEntriesPage encounters={encounters} />}
+            component={() => (
+              <SearchEntriesPage
+                encounters={encounters}
+                setEncounters={setEncounters}
+              />
+            )}
           />
         </Switch>
       </StyledMain>

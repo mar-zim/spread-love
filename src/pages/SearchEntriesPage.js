@@ -7,7 +7,7 @@ import {
   sortEncountersLast14Days,
 } from '../services/SortEntries'
 
-export default function SearchEntriesPage({ encounters }) {
+export default function SearchEntriesPage({ encounters, setEncounters }) {
   const [displayAllEncounters, setDisplayAllEncounters] = useState(true)
 
   const allEncountersSorted = sortAllEncounters(encounters)
@@ -40,7 +40,7 @@ export default function SearchEntriesPage({ encounters }) {
         onClick={() => setDisplayAllEncounters(!displayAllEncounters)}
         text={displayAllEncounters ? 'Show last 14 days' : 'Show all entries'}
       ></Button>
-      <EncounterList shownEntries={results} />
+      <EncounterList shownEntries={results} setEncounters={setEncounters} />
     </>
   )
 }
