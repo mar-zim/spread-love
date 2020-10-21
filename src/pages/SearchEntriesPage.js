@@ -39,6 +39,8 @@ export default function SearchEntriesPage({ encounters, setEncounters }) {
       <Button
         onClick={() => setDisplayAllEncounters(!displayAllEncounters)}
         text={displayAllEncounters ? 'Show last 14 days' : 'Show all entries'}
+        backgroundColor="var(--white)"
+        color="var(--darkblue)"
       ></Button>
       <EncounterList shownEntries={results} setEncounters={setEncounters} />
     </>

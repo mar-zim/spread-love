@@ -3,7 +3,7 @@ import EncounterList from '../components/EncounterList'
 import { sortEncountersLast14Days } from '../services/SortEntries'
 import styled from 'styled-components'
 
-export default function HomePage({ encounters }) {
+export default function HomePage({ encounters, setEncounters }) {
   const encountersLast14Days = sortEncountersLast14Days(encounters)
 
   return (
@@ -16,7 +16,10 @@ export default function HomePage({ encounters }) {
         specific friends, go to "Search".
       </div>
       <h2>Last 14 days</h2>
-      <EncounterList shownEntries={encountersLast14Days} />
+      <EncounterList
+        shownEntries={encountersLast14Days}
+        setEncounters={setEncounters}
+      />
     </>
   )
 }

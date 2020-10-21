@@ -23,7 +23,9 @@ export default function App() {
           <Route
             exact
             path="/"
-            component={() => <HomePage encounters={encounters} />}
+            component={() => (
+              <HomePage encounters={encounters} setEncounters={setEncounters} />
+            )}
           />
           <Route
             path="/addentry"

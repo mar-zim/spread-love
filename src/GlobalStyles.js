@@ -48,8 +48,14 @@ h3 {
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--lightblue);
+}
+
+h5 {
+  font-size: 14px;
+  color: var(--grey-1);
+  margin-top: 0;
 }
 
 input, textarea {
