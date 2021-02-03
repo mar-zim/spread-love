@@ -1,14 +1,14 @@
 import React from 'react'
 import EncounterList from '../components/EncounterList'
 import { sortEncountersLast14Days } from '../services/SortEntries'
+import styled from 'styled-components'
 
-export default function HomePage({ encounters }) {
+export default function HomePage({ encounters, setEncounters }) {
   const encountersLast14Days = sortEncountersLast14Days(encounters)
 
   return (
     <>
-      <h1>Welcome!</h1>
-      <img src={process.env.PUBLIC_URL + '/logo.svg'} alt="logo" />
+      <StyledLogo src={process.env.PUBLIC_URL + '/logo.svg'} alt="logo" />
       <div>
         Below you see your list of friends, you met in the last 14 days -
         showing the latest entries first. If you want to add a new 'meeting'
@@ -16,7 +16,15 @@ export default function HomePage({ encounters }) {
         specific friends, go to "Search".
       </div>
       <h2>Last 14 days</h2>
-      <EncounterList shownEntries={encountersLast14Days} />
+      <EncounterList
+        shownEntries={encountersLast14Days}
+        setEncounters={setEncounters}
+      />
     </>
   )
 }
+
+const StyledLogo = styled.img`
+  width: 100%;
+  margin-top: 10%;
+`

@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import useAutocompleteOptions from '../services/useAutocompleteOptions'
 
 export default function Search({ setSearchTerm, searchTerm, encounters }) {
-  const [autocompleteOptions, setAutocompleteOptions] = useState([])
   const [showDropdown, setShowDropdown] = useState(false)
+  const autocompleteOptions = useAutocompleteOptions(encounters)
+  const matchArray = findMatches(searchTerm, autocompleteOptions)
+
+  function findMatches(wordToMatch, names) {
+    return names.filter((name) => {
+      const regex = new RegExp(wordToMatch, 'gi')
+      return name.match(regex)
+    })
+  }
 
   function handleSearch(event) {
     setSearchTerm(event.target.value)
   }
 
-  //function to hide the autocomplete options and take the selected name as search parameter, when a name is selcted from the autocomplete list
   function selectName(name) {
     setSearchTerm(name)
     setShowDropdown(false)
   }
 
-  //when the component mounts, an array is created that contains all the entered names as unique values. this array is used for the dropdown of the autocomplete options
-  useEffect(() => {
-    let friendNameArray = []
-    encounters.forEach((encounter) =>
-      encounter.friends.forEach(
-        (friend) =>
-          (friendNameArray = [...friendNameArray, friend.name.toLowerCase()])
-      )
-    )
-    const uniqueNames = [...new Set(friendNameArray)]
-    setAutocompleteOptions(uniqueNames)
-  }, [])
+  function clearSearch() {
+    setShowDropdown(false)
+    setSearchTerm('')
+  }
 
   return (
-    <div>
+    <StyledSearchbox>
       <input
         type="text"
         placeholder="Search for entries by friend's name"
@@ -37,30 +37,45 @@ export default function Search({ setSearchTerm, searchTerm, encounters }) {
         onChange={handleSearch}
         onClick={() => setShowDropdown(!showDropdown)}
       />
+      <StyledClearSearch onClick={clearSearch}>x</StyledClearSearch>
       {showDropdown && (
         <StyledAutoCompleteDropdown>
-          {autocompleteOptions
-            .filter((option) => option.indexOf(searchTerm.toLowerCase()) > -1)
-            .map((value, index) => {
-              return (
-                <div onClick={() => selectName(value)} key={index}>
-                  <span>{value}</span>
-                </div>
-              )
-            })}
+          {matchArray.map((value, index) => {
+            return (
+              <div onClick={() => selectName(value)} key={index}>
+                <span>{value}</span>
+              </div>
+            )
+          })}
         </StyledAutoCompleteDropdown>
       )}
-    </div>
+    </StyledSearchbox>
   )
 }
+
+const StyledSearchbox = styled.div`
+  position: relative;
+`
 
 const StyledAutoCompleteDropdown = styled.div`
   z-index: 1000;
   position: absolute;
-  min-width: 40%;
-  border: 1px solid var(--grey-1);
+  width: 80vw;
+  background-color: #ffffff;
   div {
-    padding: 2px;
+    padding: 2px 0 2px 15px;
     background-color: #ffffff;
+    &:hover {
+      color: var(--orange);
+    }
   }
+`
+
+const StyledClearSearch = styled.div`
+  position: absolute;
+  right: 15%;
+  top: 0;
+  font-size: 18px;
+  color: var(--orange);
+  cursor: pointer;
 `

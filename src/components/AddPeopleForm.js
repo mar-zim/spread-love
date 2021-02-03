@@ -3,15 +3,16 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import GetToday from '../services/GetToday'
 import useLocation from '../services/useLocation'
 import Button from './Button'
 
 export default function AddPeopleForm({ encounters, setEncounters }) {
-  const [userLocation, userLocationIsLoading] = useLocation() //custom hook to fetch human readable location data from geolocation
+  const [userLocation, userLocationIsLoading] = useLocation()
   const history = useHistory()
   const inputId = uuidv4()
+  const today = GetToday()
 
-  //custom hooks of react-hook-form library to use form
   const { register, handleSubmit, errors, formState, control, reset } = useForm(
     {
       mode: 'onBlur',
@@ -28,14 +29,14 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
 
   function onSubmit(newEncounter) {
     setEncounters([...encounters, newEncounter])
-    reset() //reset form values on only successful submit
-    history.push('/') // go back to home page
+    reset()
+    history.push('/')
   }
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledLabel>Who did you meet?</StyledLabel>
       {fields.map((item, index) => {
-        //creating dynamic input fields, so that user can add more than one friends name
         return (
           <div key={item.id}>
             <StyledNameInput
@@ -46,25 +47,35 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
               })}
               placeholder="Please enter a name"
             />
-            <Button type="button" onClick={() => remove(index)} text="x" />
+            {index > 0 && (
+              <Button
+                type="button"
+                backgroundColor="var(--white)"
+                color="var(--darkblue)"
+                onClick={() => remove(index)}
+                text="x"
+              />
+            )}
           </div>
         )
       })}
-      <Button //button to add more input fields for names
+      <Button
         type="button"
         text="Add more people"
+        backgroundColor="var(--white)"
+        color="var(--darkblue)"
         onClick={() => {
           append({ name: '' })
         }}
       />
       {errors.friends && (
-        <StyledErrorMessage>
-          Please enter first and last name
-        </StyledErrorMessage>
+        <StyledErrorMessage>Please enter at least one name</StyledErrorMessage>
       )}
+      <StyledLabel htmlFor="date">When did you meet?</StyledLabel>
       <input
         type="date"
         name="date"
+        max={today}
         ref={register({
           required: true,
         })}
@@ -74,6 +85,7 @@ export default function AddPeopleForm({ encounters, setEncounters }) {
       {errors.date && (
         <StyledErrorMessage>Please select a date</StyledErrorMessage>
       )}
+      <StyledLabel htmlFor="date">Where did you meet?</StyledLabel>
       {userLocationIsLoading ? (
         <div>Trying to get your current location data...</div>
       ) : (
@@ -121,4 +133,8 @@ const StyledErrorMessage = styled.div`
 
 const StyledNameInput = styled.input`
   margin-right: 1%;
+`
+const StyledLabel = styled.label`
+  margin-bottom: 0;
+  margin-top: 15px;
 `

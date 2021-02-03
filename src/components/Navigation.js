@@ -25,8 +25,7 @@ const StyledNavigation = styled.div`
   justify-items: center;
   width: 100%;
   .active {
-    color: var(--orange);
-    border: 2px solid var(--orange);
+    background-color: var(--orange);
   }
 `
 
@@ -36,7 +35,7 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   cursor: pointer;
   font-size: 18px;
-  color: var(--darkblue);
-  border: 2px solid var(--darkblue);
+  color: var(--white);
+  background-color: var(--darkblue);
   border-radius: 10px;
 `

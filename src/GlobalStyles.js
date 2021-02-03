@@ -48,17 +48,22 @@ h3 {
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--lightblue);
+}
+
+h5 {
+  font-size: 14px;
+  color: var(--grey-1);
+  margin-top: 0;
 }
 
 input, textarea {
     padding: 0 5px;
-    margin-top: 5px;
     border: 1px solid var(--lightblue);
     border-radius: 3px;
     height: 30px;
-    width: 80%;
+    width: 80vw;
     font-family: var(--fontbody);
     font-size: 16px;
     ::placeholder {
